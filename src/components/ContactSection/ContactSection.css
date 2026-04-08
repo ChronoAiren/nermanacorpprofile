@@ -9,26 +9,44 @@
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-8);
   max-width: var(--container-max);
   margin: 0 auto;
 }
 
+@media (max-width: 767px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
 /* ── Contact Info ── */
+.channels-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ghost);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-ghost-dim);
+}
+
 .contact-desc {
   font-family: var(--font-body);
   font-size: var(--text-base);
   color: var(--color-secondary);
   line-height: 1.7;
   margin-bottom: var(--space-8);
-  max-width: 480px;
+  max-width: 100%;
+  grid-column: 1 / -1;
 }
 
 .contact-channels {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-4);
 }
 
 /* Channel items as clickable links */
@@ -95,7 +113,7 @@ a.channel-value:hover {
 
 /* ── Social Links ── */
 .social-links {
-  margin-top: var(--space-8);
+  margin-top: 0;
 }
 
 .social-title {
@@ -110,8 +128,14 @@ a.channel-value:hover {
 
 .social-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: 1fr;
   gap: var(--space-3);
+}
+
+@media (max-width: 767px) {
+  .social-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .social-item {
@@ -152,13 +176,6 @@ a.channel-value:hover {
 .social-item:hover .social-arrow {
   opacity: 1;
   transform: translate(2px, -2px);
-}
-
-/* ── Mobile Social Links ── */
-@media (max-width: 767px) {
-  .social-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 359px) {

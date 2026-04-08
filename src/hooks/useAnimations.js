@@ -116,7 +116,7 @@ export function useActiveSection(sectionIds) {
           }
         }
       },
-      { threshold: 0.2, rootMargin: '-10% 0px -40% 0px' }
+      { threshold: 0.15, rootMargin: '-5% 0px -30% 0px' }
     );
 
     sectionIds.forEach((id) => {

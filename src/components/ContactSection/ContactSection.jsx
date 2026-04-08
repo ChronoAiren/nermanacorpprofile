@@ -99,58 +99,58 @@ export default function ContactSection() {
       </div>
 
       <div className="contact-grid">
-        {(channels.length > 0 || socialLinks.length > 0 || personal?.name) && (
+        {/* Description - full width */}
+        <p className="contact-desc">
+          Initiating secure communication channel. Click any link to connect directly.
+        </p>
+
+        {/* Contact Channels - Left Column */}
+        {channels.length > 0 && (
           <div
             ref={infoRef}
-            className={`contact-info reveal-element ${infoVisible ? 'revealed' : ''}`}
+            className={`contact-channels-wrapper reveal-element ${infoVisible ? 'revealed' : ''}`}
           >
-            <p className="contact-desc">
-              Initiating secure communication channel. Click any link to connect directly.
-            </p>
+            <h4 className="channels-title">CONTACT_CHANNELS</h4>
+            <div className="contact-channels">
+              {channels.map(channel => (
+                <a
+                  key={channel.key}
+                  href={channel.href || '#'}
+                  className="channel-item"
+                  target={channel.href?.startsWith('http') ? '_blank' : undefined}
+                  rel={channel.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                >
+                  <span className="channel-icon material-icons">{channel.icon}</span>
+                  <div className="channel-data">
+                    <span className="channel-label">{channel.label}</span>
+                    <span className="channel-value">{channel.value}</span>
+                  </div>
+                  <span className="channel-arrow material-icons">open_in_new</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
 
-            {/* Contact Channels - Direct Links */}
-            {channels.length > 0 && (
-              <div className="contact-channels">
-                {channels.map(channel => (
-                  <a
-                    key={channel.key}
-                    href={channel.href || '#'}
-                    className="channel-item"
-                    target={channel.href?.startsWith('http') ? '_blank' : undefined}
-                    rel={channel.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  >
-                    <span className="channel-icon material-icons">{channel.icon}</span>
-                    <div className="channel-data">
-                      <span className="channel-label">{channel.label}</span>
-                      <span className="channel-value">{channel.value}</span>
-                    </div>
-                    <span className="channel-arrow material-icons">open_in_new</span>
-                  </a>
-                ))}
-              </div>
-            )}
-
-            {/* Social Links */}
-            {socialLinks.length > 0 && (
-              <div className="social-links">
-                <h4 className="social-title">SOCIAL_NETWORKS</h4>
-                <div className="social-grid">
-                  {socialLinks.map(social => (
-                    <a
-                      key={social.key}
-                      href={social.href}
-                      className="social-item"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                    >
-                      <span className="social-icon">{social.label}</span>
-                      <span className="social-arrow material-icons">open_in_new</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
+        {/* Social Links - Right Column */}
+        {socialLinks.length > 0 && (
+          <div className="social-links">
+            <h4 className="social-title">SOCIAL_NETWORKS</h4>
+            <div className="social-grid">
+              {socialLinks.map(social => (
+                <a
+                  key={social.key}
+                  href={social.href}
+                  className="social-item"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                >
+                  <span className="social-icon">{social.label}</span>
+                  <span className="social-arrow material-icons">open_in_new</span>
+                </a>
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -369,15 +369,17 @@ textarea {
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
-  transition: transform var(--duration-fast) var(--ease-out) !important;
+  transition: transform 0.1s ease-out !important;
+  will-change: transform;
 }
 
 .btn-primary:hover {
-  animation: glitch-1 0.15s linear;
+  animation: glitch-intense 0.3s ease-in-out;
 }
 
 .btn-primary:active {
-  transform: scale(0.97);
+  transform: scale(0.95);
+  transition: transform 0.05s ease-out !important;
 }
 
 .btn-primary .btn-glitch-layer {
@@ -385,11 +387,76 @@ textarea {
   inset: 0;
   background: var(--color-bg);
   opacity: 0;
-  transition: opacity var(--duration-fast) !important;
+  mix-blend-mode: difference;
 }
 
 .btn-primary:hover .btn-glitch-layer {
-  opacity: 0.1;
+  animation: glitch-flash 0.3s ease-in-out;
+}
+
+/* Enhanced glitch animation keyframes */
+@keyframes glitch-intense {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  10% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+  20% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(180deg);
+  }
+  30% {
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(270deg);
+  }
+  40% {
+    transform: translate(2px, 2px);
+    filter: hue-rotate(360deg);
+  }
+  50% {
+    transform: translate(-1px, 1px);
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%, 0 45%, 100% 45%, 100% 100%, 0 100%);
+  }
+  60% {
+    transform: translate(1px, -1px);
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 0 55%, 0 65%, 100% 65%, 100% 100%, 0 100%);
+  }
+  70% {
+    transform: translate(-1px, -1px);
+    clip-path: none;
+  }
+  80% {
+    transform: translate(1px, 1px);
+  }
+  90% {
+    transform: translate(-1px, 0);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes glitch-flash {
+  0%, 100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  25% {
+    opacity: 0.3;
+    transform: translateX(-5px);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+  75% {
+    opacity: 0.2;
+    transform: translateX(-3px);
+  }
 }
 
 .btn-bracket {
