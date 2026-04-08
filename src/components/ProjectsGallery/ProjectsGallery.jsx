@@ -1,7 +1,21 @@
 import { useReveal, useLiveTimestamp } from '../../hooks/useAnimations';
 import './ProjectsGallery.css';
+import data from '../../data.json';
 
-const PROJECTS = [
+// Default stock images for projects when none specified
+const DEFAULT_PROJECT_IMAGE = '/project-neural.png';
+const STOCK_IMAGES = [
+  '/project-neural.png',
+  '/project-encryption.png',
+  '/project-silicon.png',
+  '/project-monolith.png',
+];
+
+// Get a stock image based on project index
+const getStockImage = (index) => STOCK_IMAGES[index % STOCK_IMAGES.length];
+
+// Fallback projects array if data.json has no projects
+const FALLBACK_PROJECTS = [
   {
     id: '_4372201',
     title: 'NEURAL_INTERFACE_V1',
@@ -45,10 +59,11 @@ const PROJECTS = [
   {
     id: '_8290164',
     title: 'KINETIC_SYNC',
-    desc: 'Advanced haptic synchronization for tele-operated robotics systems in high-precision environments.',
+    description: 'Advanced haptic synchronization for tele-operated robotics systems in high-precision environments.',
     tech: ['HAPTICS', 'ROS2', 'C++'],
     status: 'TESTING',
     image: '/project-encryption.png',
+    link: '#'
   },
 ];
 
@@ -74,29 +89,38 @@ function ProjectCard({ project, index }) {
           <div className="hud-corner hud-corner-br" />
           <div className="card-image-wrapper">
             <img
-              src={project.image}
-              alt={`${project.title} project`}
+              src={project.image || getStockImage(index)}
+              alt={`${project.title || 'Project'} preview`}
               className="card-image"
               loading="lazy"
+              onError={(e) => { e.target.src = DEFAULT_PROJECT_IMAGE; }}
             />
             <div className="card-scan-line" />
           </div>
         </div>
       </div>
 
-      <div className="card-content">
-        <h3 className="card-title">{project.title}</h3>
-        <p className="card-desc">{project.desc}</p>
-        <div className="card-tech">
-          {project.tech.map((t) => (
-            <span key={t} className="tech-tag">{t}</span>
-          ))}
+      {(project.title || project.description) && (
+        <div className="card-content">
+          {project.title && <h3 className="card-title">{project.title}</h3>}
+          {project.description && <p className="card-desc">{project.description}</p>}
+          {project.tech && project.tech.length > 0 && (
+            <div className="card-tech">
+              {project.tech.map((t) => (
+                <span key={t} className="tech-tag">{t}</span>
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      )}
 
-      <a href="#" className="card-link btn-bracket" onClick={(e) => e.preventDefault()}>
-        [ VIEW_PROJECT ]
-      </a>
+      {project.link && (
+        <a href={project.link} className="card-link btn-bracket" onClick={(e) => {
+          if (project.link === '#') e.preventDefault();
+        }}>
+          [ VIEW_PROJECT ]
+        </a>
+      )}
     </article>
   );
 }
@@ -104,6 +128,13 @@ function ProjectCard({ project, index }) {
 export default function ProjectsGallery() {
   const [headerRef, headerVisible] = useReveal();
   const timestamp = useLiveTimestamp();
+
+  // Use projects from data.json or fallback
+  // Supports both: data.projects (old array) and data.projects.items (new structure)
+  const projects = data.projects?.items || data.projects || FALLBACK_PROJECTS;
+
+  // Don't render section if no projects at all
+  if (!projects || projects.length === 0) return null;
 
   return (
     <section id="projects" className="section section-projects">
@@ -134,8 +165,8 @@ export default function ProjectsGallery() {
       </div>
 
       <div className="projects-grid">
-        {PROJECTS.map((project, i) => (
-          <ProjectCard key={project.id} project={project} index={i} />
+        {projects.map((project, i) => (
+          <ProjectCard key={project.id || i} project={project} index={i} />
         ))}
       </div>
     </section>

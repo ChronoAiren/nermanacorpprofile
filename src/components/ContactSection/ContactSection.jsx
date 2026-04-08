@@ -1,18 +1,83 @@
 import { useState } from 'react';
 import { useReveal } from '../../hooks/useAnimations';
 import './ContactSection.css';
+import data from '../../data.json';
 
 export default function ContactSection() {
   const [headerRef, headerVisible] = useReveal();
   const [infoRef, infoVisible] = useReveal();
-  const [formRef, formVisible] = useReveal();
   const [footerRef, footerVisible] = useReveal();
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
+  const { personal, social } = data;
+
+  // Smart link generation based on email provider and location
+  const getSmartEmailLink = (email) => {
+    if (!email) return null;
+    // Gmail users get Gmail compose link
+    if (email.includes('@gmail.com')) {
+      return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+    }
+    // Outlook/Hotmail users
+    if (email.includes('@outlook.com') || email.includes('@hotmail.com')) {
+      return `https://outlook.live.com/mail/0/deeplink/compose?to=${encodeURIComponent(email)}`;
+    }
+    // Yahoo users
+    if (email.includes('@yahoo.com')) {
+      return `https://compose.mail.yahoo.com/?to=${encodeURIComponent(email)}`;
+    }
+    // Default mailto for others
+    return `mailto:${email}`;
   };
+
+  const getSmartLocationLink = (location) => {
+    if (!location) return null;
+    // Open Google Maps with location search
+    return `https://www.google.com/maps/search/${encodeURIComponent(location)}`;
+  };
+
+  // Define contact channels based on data availability
+  const channels = [
+    {
+      key: 'email',
+      icon: 'mail',
+      label: 'EMAIL',
+      value: personal?.email,
+      href: getSmartEmailLink(personal?.email),
+      external: personal?.email?.includes('@gmail.com') || personal?.email?.includes('@outlook.com') || personal?.email?.includes('@hotmail.com') || personal?.email?.includes('@yahoo.com')
+    },
+    {
+      key: 'location',
+      icon: 'location_on',
+      label: 'LOCATION',
+      value: personal?.location,
+      href: getSmartLocationLink(personal?.location),
+      external: true
+    },
+    {
+      key: 'phone',
+      icon: 'phone',
+      label: 'PHONE',
+      value: personal?.phone || personal?.subnetId,
+      href: personal?.phone || personal?.subnetId ? `tel:${(personal?.phone || personal?.subnetId).replace(/\s/g, '')}` : null,
+      external: false
+    }
+  ].filter(c => c.value); // Only keep channels with values
+
+  // Define social links
+  const socialLinks = [
+    { key: 'linkedin', icon: 'linkedin', label: 'LINKEDIN', baseUrl: 'linkedin.com/in/' },
+    { key: 'github', icon: 'github', label: 'GITHUB', baseUrl: 'github.com/' },
+    { key: 'twitter', icon: 'twitter', label: 'TWITTER', baseUrl: 'twitter.com/' },
+    { key: 'facebook', icon: 'facebook', label: 'FACEBOOK', baseUrl: 'facebook.com/' },
+    { key: 'instagram', icon: 'instagram', label: 'INSTAGRAM', baseUrl: 'instagram.com/' },
+  ].map(platform => {
+    const username = social?.[platform.key] || personal?.[platform.key];
+    return username ? {
+      ...platform,
+      value: username,
+      href: `https://${platform.baseUrl}${username}`
+    } : null;
+  }).filter(Boolean);
 
   return (
     <section id="contact" className="section section-contact">
@@ -34,108 +99,60 @@ export default function ContactSection() {
       </div>
 
       <div className="contact-grid">
-        <div
-          ref={infoRef}
-          className={`contact-info reveal-element ${infoVisible ? 'revealed' : ''}`}
-        >
-          <p className="contact-desc">
-            Initiating secure communication channel. All transmissions are
-            encrypted via VOID_PROTOCOL_V4.
-          </p>
-          <div className="contact-channels">
-            <div className="channel-item">
-              <span className="channel-icon material-icons">mail</span>
-              <div className="channel-data">
-                <span className="channel-label">EMAIL_RELAY</span>
-                <span className="channel-value">v.raven@monolith.sys</span>
-              </div>
-            </div>
-            <div className="channel-item">
-              <span className="channel-icon material-icons">location_on</span>
-              <div className="channel-data">
-                <span className="channel-label">PHYSICAL_NODE</span>
-                <span className="channel-value">Sector_09, Neo-Tokyo</span>
-              </div>
-            </div>
-            <div className="channel-item">
-              <span className="channel-icon material-icons">language</span>
-              <div className="channel-data">
-                <span className="channel-label">NETWORK_PORTAL</span>
-                <span className="channel-value">monolith.sys/vraven</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        {(channels.length > 0 || socialLinks.length > 0 || personal?.name) && (
+          <div
+            ref={infoRef}
+            className={`contact-info reveal-element ${infoVisible ? 'revealed' : ''}`}
+          >
+            <p className="contact-desc">
+              Initiating secure communication channel. Click any link to connect directly.
+            </p>
 
-        <div
-          ref={formRef}
-          className={`reveal-element ${formVisible ? 'revealed' : ''}`}
-        >
-          {submitted ? (
-            <div className="form-success">
-              <span className="success-icon material-icons">check_circle</span>
-              <h3 className="success-title">TRANSMISSION_SENT</h3>
-              <p className="success-text">
-                Signal received. Decryption in progress.
-                <br />
-                Expected response: 24-48 cycles.
-              </p>
-            </div>
-          ) : (
-            <form
-              className="contact-form"
-              onSubmit={handleSubmit}
-              aria-label="Contact form"
-            >
-              <div className="form-group">
-                <label htmlFor="contact-name" className="form-label">
-                  DESIGNATION
-                </label>
-                <input
-                  type="text"
-                  id="contact-name"
-                  className="form-input"
-                  placeholder="ENTER_NAME"
-                  autoComplete="name"
-                  required
-                />
-                <div className="input-line" />
+            {/* Contact Channels - Direct Links */}
+            {channels.length > 0 && (
+              <div className="contact-channels">
+                {channels.map(channel => (
+                  <a
+                    key={channel.key}
+                    href={channel.href || '#'}
+                    className="channel-item"
+                    target={channel.href?.startsWith('http') ? '_blank' : undefined}
+                    rel={channel.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  >
+                    <span className="channel-icon material-icons">{channel.icon}</span>
+                    <div className="channel-data">
+                      <span className="channel-label">{channel.label}</span>
+                      <span className="channel-value">{channel.value}</span>
+                    </div>
+                    <span className="channel-arrow material-icons">open_in_new</span>
+                  </a>
+                ))}
               </div>
-              <div className="form-group">
-                <label htmlFor="contact-email" className="form-label">
-                  EMAIL_NODE
-                </label>
-                <input
-                  type="email"
-                  id="contact-email"
-                  className="form-input"
-                  placeholder="ENTER_EMAIL"
-                  autoComplete="email"
-                  required
-                />
-                <div className="input-line" />
+            )}
+
+            {/* Social Links */}
+            {socialLinks.length > 0 && (
+              <div className="social-links">
+                <h4 className="social-title">SOCIAL_NETWORKS</h4>
+                <div className="social-grid">
+                  {socialLinks.map(social => (
+                    <a
+                      key={social.key}
+                      href={social.href}
+                      className="social-item"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                    >
+                      <span className="social-icon">{social.label}</span>
+                      <span className="social-arrow material-icons">open_in_new</span>
+                    </a>
+                  ))}
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="contact-message" className="form-label">
-                  TRANSMISSION
-                </label>
-                <textarea
-                  id="contact-message"
-                  className="form-input form-textarea"
-                  placeholder="ENTER_MESSAGE"
-                  rows="5"
-                  required
-                />
-                <div className="input-line" />
-              </div>
-              <button type="submit" className="btn-primary">
-                <span className="btn-text">SEND_SIGNAL</span>
-                <span className="btn-arrow material-icons">send</span>
-                <span className="btn-glitch-layer" />
-              </button>
-            </form>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
 
       <div

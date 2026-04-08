@@ -4,6 +4,7 @@
 
 @import './variables.css';
 @import './animations.css';
+@import './mobile-utilities.css';
 
 /* ── Reset ── */
 *,
@@ -19,6 +20,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Prevent layout shift from scrollbar */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -29,6 +32,9 @@ body {
   background-color: var(--color-bg);
   overflow-x: hidden;
   min-height: 100vh;
+  min-height: 100dvh;
+  transition: background-color var(--duration-slow) var(--ease-out),
+              color var(--duration-slow) var(--ease-out);
 }
 
 body.boot-active {
@@ -60,12 +66,15 @@ ul, ol {
 
 input, textarea {
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  font-size: var(--text-base); /* 16px to prevent iOS zoom */
   color: var(--color-primary);
   background: transparent;
   border: none;
   outline: none;
   width: 100%;
+  transition: color var(--duration-base);
+  /* Prevent zoom on focus in iOS Safari */
+  -webkit-text-size-adjust: 100%;
 }
 
 textarea {
@@ -78,16 +87,49 @@ textarea {
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-ghost); }
+
+/* ── Theme Transition: smooth bg/color swap on all elements ── */
+*, *::before, *::after {
+  transition: background-color var(--duration-slow) var(--ease-out),
+              border-color var(--duration-slow) var(--ease-out),
+              color var(--duration-slow) var(--ease-out);
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
+/* Exclude elements where transitions cause jank */
+.scanline-overlay,
+.noise-overlay,
+.boot-overlay,
+.hud-corner::before,
+.hud-corner::after,
+.skill-fill,
+.skill-fill.animate,
+.card-scan-line,
+.scan-overlay,
+.boot-progress-bar,
+.marker-dot,
+.status-dot {
+  transition: none !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--color-ghost);
+/* ── Honeycomb Hover Effect (Desktop Only) ── */
+@media (min-width: 1024px) {
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-7.5L27.99 34H28v2.31h-.01L17 42.65V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  body:hover::before {
+    opacity: 1;
+  }
 }
 
 /* ── Persistent Overlays ── */
@@ -97,7 +139,7 @@ textarea {
   left: 0;
   width: 100%;
   height: 3px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--scanline-color);
   z-index: var(--z-scanline);
   pointer-events: none;
   animation: scanline-move 8s linear infinite;
@@ -112,9 +154,41 @@ textarea {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   z-index: var(--z-scanline);
   pointer-events: none;
-  opacity: 0.08;
+  opacity: var(--noise-opacity);
   animation: noise-shift 0.5s steps(10) infinite;
 }
+
+/* ── Theme Toggle Button ── */
+.theme-toggle {
+  position: relative;
+  width: var(--toggle-size);
+  height: var(--toggle-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-muted);
+  font-size: 18px;
+  border: 1px solid var(--color-ghost-dim);
+  transition: color var(--duration-base), border-color var(--duration-base),
+              background-color var(--duration-base) !important;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  color: var(--color-primary);
+  border-color: var(--color-ghost);
+}
+
+.theme-toggle .material-icons {
+  font-size: 18px;
+  transition: transform var(--duration-slow) var(--ease-spring) !important;
+}
+
+[data-theme="light"] .theme-toggle .icon-dark { display: none; }
+[data-theme="light"] .theme-toggle .icon-light { display: block; }
+.theme-toggle .icon-light { display: none; }
+.theme-toggle .icon-dark  { display: block; }
 
 /* ── Utility Classes ── */
 .meta-label {
@@ -129,6 +203,7 @@ textarea {
   display: inline-block;
   width: 6px;
   height: 6px;
+  flex-shrink: 0;
   background: var(--color-primary);
   animation: pulse-dot 2s ease infinite;
 }
@@ -160,14 +235,12 @@ textarea {
   opacity: 0.8;
   color: var(--color-primary);
   animation: glitch-1 0.4s linear;
-  text-shadow: -2px 0 rgba(255, 255, 255, 0.3);
 }
 
 .glitch-text:hover::after {
   opacity: 0.8;
   color: var(--color-primary);
   animation: glitch-2 0.4s linear;
-  text-shadow: 2px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* ── HUD Bracket Container ── */
@@ -181,7 +254,6 @@ textarea {
   width: 20px;
   height: 20px;
   opacity: 0;
-  transition: opacity var(--duration-slow) var(--ease-out);
 }
 
 .hud-container.visible .hud-corner {
@@ -199,17 +271,14 @@ textarea {
 .hud-corner-tl { top: 0; left: 0; }
 .hud-corner-tl::before { top: 0; left: 0; width: 20px; height: 2px; animation: corner-expand-h var(--duration-slow) var(--ease-out) forwards; }
 .hud-corner-tl::after  { top: 0; left: 0; width: 2px; height: 20px; animation: corner-expand-v var(--duration-slow) var(--ease-out) forwards; }
-
 /* Top-right */
 .hud-corner-tr { top: 0; right: 0; }
 .hud-corner-tr::before { top: 0; right: 0; width: 20px; height: 2px; animation: corner-expand-h var(--duration-slow) var(--ease-out) forwards; }
 .hud-corner-tr::after  { top: 0; right: 0; width: 2px; height: 20px; animation: corner-expand-v var(--duration-slow) var(--ease-out) forwards; }
-
 /* Bottom-left */
 .hud-corner-bl { bottom: 0; left: 0; }
 .hud-corner-bl::before { bottom: 0; left: 0; width: 20px; height: 2px; animation: corner-expand-h var(--duration-slow) var(--ease-out) forwards; }
 .hud-corner-bl::after  { bottom: 0; left: 0; width: 2px; height: 20px; animation: corner-expand-v var(--duration-slow) var(--ease-out) forwards; }
-
 /* Bottom-right */
 .hud-corner-br { bottom: 0; right: 0; }
 .hud-corner-br::before { bottom: 0; right: 0; width: 20px; height: 2px; animation: corner-expand-h var(--duration-slow) var(--ease-out) forwards; }
@@ -218,9 +287,9 @@ textarea {
 /* ── Reveal Animation ── */
 .reveal-element {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(24px);
   transition: opacity var(--duration-reveal) var(--ease-out),
-              transform var(--duration-reveal) var(--ease-out);
+              transform var(--duration-reveal) var(--ease-out) !important;
 }
 
 .reveal-element.revealed {
@@ -230,13 +299,19 @@ textarea {
 
 /* ── Section Layout ── */
 .section {
-  min-height: 100vh;
-  padding: var(--space-12) var(--space-6);
+  /* Remove forced min-height to allow content to determine height */
+  min-height: auto;
+  /* Use responsive padding variables */
+  padding: var(--section-padding-y) var(--section-padding-x) var(--mobile-bottom-gap);
   position: relative;
+  /* Ensure sections don't overflow horizontally */
+  overflow-x: hidden;
+  /* Ensure content fits comfortably */
+  overflow-y: visible;
 }
 
 .section-header {
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-8);
 }
 
 .section-label {
@@ -253,7 +328,7 @@ textarea {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: var(--text-3xl);
+  font-size: clamp(1.6rem, 6vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   text-transform: uppercase;
@@ -268,8 +343,9 @@ textarea {
   margin-top: var(--space-4);
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   flex-wrap: wrap;
+  row-gap: var(--space-2);
 }
 
 .meta-divider {
@@ -281,7 +357,9 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-4) var(--space-7);
+  /* Comfortable touch target on mobile */
+  padding: var(--space-4) var(--space-6);
+  min-height: 48px;
   background: var(--color-primary);
   color: var(--color-on-primary);
   font-family: var(--font-display);
@@ -291,7 +369,7 @@ textarea {
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
-  transition: transform var(--duration-fast) var(--ease-out);
+  transition: transform var(--duration-fast) var(--ease-out) !important;
 }
 
 .btn-primary:hover {
@@ -307,7 +385,7 @@ textarea {
   inset: 0;
   background: var(--color-bg);
   opacity: 0;
-  transition: opacity var(--duration-fast);
+  transition: opacity var(--duration-fast) !important;
 }
 
 .btn-primary:hover .btn-glitch-layer {
@@ -319,7 +397,11 @@ textarea {
   font-size: var(--text-sm);
   color: var(--color-secondary);
   letter-spacing: 0.08em;
-  transition: color var(--duration-base), letter-spacing var(--duration-base);
+  /* touch target */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--duration-base), letter-spacing var(--duration-base) !important;
 }
 
 .btn-bracket:hover {
@@ -334,10 +416,116 @@ textarea {
   width: 100%;
 }
 
-/* ── Responsive ── */
+/* ── Mobile Portrait Unified Spacing (360px - 767px) ── */
+@media (min-width: 360px) and (max-width: 767px) and (orientation: portrait) {
+  .section {
+    padding: var(--space-5) var(--space-3) calc(var(--bottom-nav-h) + var(--space-5));
+    /* Ensure minimum breathing room but no forced height */
+    min-height: auto;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-4);
+    padding: 0 var(--space-1);
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+  }
+
+  .section-meta {
+    font-size: 0.65rem;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  /* Bento card utility */
+  .bento-card {
+    background: var(--color-surface);
+    border-radius: 16px;
+    padding: var(--space-4);
+  }
+}
+
+/* ── Small phones (< 360px) ── */
+@media (max-width: 359px) {
+  .section {
+    padding: var(--space-4) var(--space-3) calc(var(--bottom-nav-h) + var(--space-4));
+    min-height: auto;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-3);
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .section-label {
+    font-size: 0.6rem;
+  }
+
+  .section-meta {
+    font-size: 0.55rem;
+    gap: var(--space-1);
+  }
+
+  .btn-primary {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-xs);
+  }
+
+  .btn-bracket {
+    font-size: var(--text-xs);
+  }
+
+  .bento-card {
+    border-radius: 12px;
+    padding: var(--space-3);
+  }
+}
+
+/* ── Landscape mobile phones ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .section {
+    min-height: auto;
+    padding: var(--space-4) var(--space-3) calc(var(--bottom-nav-h) + var(--space-4));
+  }
+
+  /* Compact mode for landscape */
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-4);
+  }
+}
+
+/* ── Responsive: tablet ── */
 @media (min-width: 768px) {
   .section {
-    padding: var(--space-12) var(--space-10);
+    padding: calc(var(--nav-height) + var(--space-10)) var(--space-8) var(--space-12);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-10);
+  }
+
+  .section-title {
+    font-size: var(--text-3xl);
+  }
+}
+
+/* ── Responsive: desktop ── */
+@media (min-width: 1024px) {
+  .section {
+    padding: calc(var(--nav-height) + var(--space-12)) var(--space-11) var(--space-12);
   }
 
   .section-title {
@@ -345,8 +533,31 @@ textarea {
   }
 }
 
-@media (min-width: 1024px) {
-  .section {
-    padding: var(--space-12) var(--space-11);
+/* ── Touch device optimizations ── */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects on touch devices */
+  .glitch-text:hover::before,
+  .glitch-text:hover::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  /* Larger touch targets */
+  .btn-primary,
+  .btn-bracket,
+  .bottom-nav-item,
+  .card-link {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Remove sticky hover states */
+  .btn-primary:hover {
+    animation: none;
+  }
+
+  /* Improve touch response */
+  .btn-primary:active {
+    transform: scale(0.95);
   }
 }

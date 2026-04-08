@@ -1,16 +1,17 @@
 /* ═══════ PROJECTS GALLERY ═══════ */
 
 .section-projects {
-  padding-top: var(--space-12);
-  padding-bottom: calc(var(--bottom-nav-h) + var(--space-10));
+  padding-top: var(--space-10);
+  padding-bottom: calc(var(--bottom-nav-h) + var(--space-8));
   background: var(--color-bg);
+  min-height: auto;
 }
 
 /* ── Projects Grid ── */
 .projects-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-8);
+  gap: var(--space-6);
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -21,9 +22,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-5);
+  gap: var(--space-3);
+  padding: var(--space-4);
   transition: background var(--duration-base) var(--ease-out);
+  /* Prevent text truncation issues on small screens */
+  min-width: 0;
 }
 
 .project-card:hover {
@@ -108,10 +111,13 @@
 
 .card-title {
   font-family: var(--font-display);
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
   font-weight: 600;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  /* Prevent overflow on small screens */
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .card-desc {
@@ -119,6 +125,12 @@
   font-size: var(--text-sm);
   color: var(--color-secondary);
   line-height: 1.6;
+  /* Limit lines on mobile to prevent huge cards */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-tech {
@@ -143,6 +155,156 @@
   align-self: flex-start;
 }
 
+/* ── Mobile Bento Grid (360px - 767px) ── */
+@media (min-width: 360px) and (max-width: 767px) {
+  .section-projects {
+    padding-top: var(--space-5);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-5));
+    min-height: auto;
+  }
+
+  .projects-grid {
+    /* Bento-style masonry grid */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(120px, auto);
+    gap: var(--space-3);
+    padding: 0 var(--space-3);
+  }
+
+  /* Featured card takes full width */
+  .project-card:first-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Every 4th card (after first) spans full width for variety */
+  .project-card:nth-child(4n) {
+    grid-column: 1 / -1;
+  }
+
+  .project-card {
+    padding: var(--space-3);
+    gap: var(--space-2);
+    border-radius: 12px;
+    /* Compact card style */
+    min-height: unset;
+  }
+
+  /* Cards with full width get more content space */
+  .project-card:first-child .card-image-wrapper,
+  .project-card:nth-child(4n) .card-image-wrapper {
+    aspect-ratio: 21 / 9;
+  }
+
+  .card-image-wrapper {
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+  }
+
+  .card-header {
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+  }
+
+  .card-title {
+    font-size: var(--text-sm);
+    line-height: 1.2;
+  }
+
+  .card-desc {
+    font-size: var(--text-xs);
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    line-height: 1.5;
+  }
+
+  .card-tech {
+    gap: var(--space-1);
+  }
+
+  .tech-tag {
+    font-size: 0.55rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .card-link {
+    font-size: var(--text-xs);
+    padding-top: var(--space-2);
+  }
+}
+
+/* ── Small phones (< 360px) ── */
+@media (max-width: 359px) {
+  .section-projects {
+    padding-top: var(--space-4);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-4));
+    min-height: auto;
+  }
+
+  .projects-grid {
+    gap: var(--space-3);
+    padding: 0 var(--space-3);
+  }
+
+  .project-card {
+    padding: var(--space-3);
+    gap: var(--space-2);
+    border-radius: 10px;
+  }
+
+  .card-image-wrapper {
+    aspect-ratio: 16 / 10;
+    border-radius: 6px;
+  }
+
+  .card-header {
+    font-size: 0.55rem;
+  }
+
+  .card-title {
+    font-size: var(--text-xs);
+  }
+
+  .card-desc {
+    font-size: 0.7rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .tech-tag {
+    font-size: 0.5rem;
+    padding: 2px 4px;
+  }
+}
+
+/* ── Landscape mobile phones ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .section-projects {
+    padding-top: var(--space-8);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-6));
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .project-card {
+    padding: var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .card-image-wrapper {
+    aspect-ratio: 16 / 9;
+  }
+
+  .card-desc {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+}
+
 /* ── Responsive ── */
 @media (min-width: 768px) {
   .section-projects {
@@ -153,6 +315,21 @@
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-6);
+  }
+
+  .project-card {
+    gap: var(--space-4);
+    padding: var(--space-5);
+  }
+
+  .card-title {
+    font-size: var(--text-lg);
+  }
+
+  .card-desc {
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    display: block;
   }
 }
 

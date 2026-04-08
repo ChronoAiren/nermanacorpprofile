@@ -132,6 +132,26 @@ export function useActiveSection(sectionIds) {
 }
 
 /**
+ * Theme (dark / light) toggle with localStorage persistence.
+ */
+export function useTheme() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('monolith-theme') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('monolith-theme', theme);
+  }, [theme]);
+
+  const toggle = useCallback(() => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
+
+  return [theme, toggle];
+}
+
+/**
  * Live timestamp that updates every second.
  */
 export function useLiveTimestamp() {

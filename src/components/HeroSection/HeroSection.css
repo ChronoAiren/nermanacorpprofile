@@ -168,6 +168,27 @@
   filter: grayscale(80%) contrast(1.2);
 }
 
+/* CSS Avatar Placeholder */
+.hero-portrait-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-dim) 100%);
+  border: 2px solid var(--color-ghost-dim);
+}
+
+.placeholder-initials {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 700;
+  color: var(--color-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
 .scan-overlay {
   position: absolute;
   top: -10%;
@@ -246,6 +267,294 @@
 }
 
 /* ── Responsive ── */
+
+/* ── Mobile Portrait (360px - 767px) - Compact Card Layout ── */
+@media (min-width: 360px) and (max-width: 767px) and (orientation: portrait) {
+  .section-home {
+    padding-top: var(--space-5);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-5));
+    min-height: auto !important;
+    height: auto;
+    justify-content: flex-start;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding: 0 var(--space-3);
+  }
+
+  /* Image first on mobile for visual impact */
+  .hero-visual {
+    order: -1;
+  }
+
+  .hero-image-wrapper {
+    aspect-ratio: 16 / 12;
+    max-height: 45vh;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .hud-container {
+    padding: var(--space-2);
+  }
+
+  /* Compact content card */
+  .hero-content {
+    gap: var(--space-3);
+    background: var(--color-surface);
+    padding: var(--space-4);
+    border-radius: 16px;
+    margin-top: calc(-1 * var(--space-6));
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-meta {
+    gap: var(--space-2);
+  }
+
+  .hero-meta .meta-separator {
+    width: 16px;
+  }
+
+  .hero-meta .meta-value {
+    font-size: 0.65rem;
+  }
+
+  /* Responsive title sizing */
+  .title-word {
+    font-size: clamp(2rem, 11vw, 3.5rem);
+    line-height: 0.9;
+  }
+
+  .hero-subtitle {
+    gap: var(--space-2);
+  }
+
+  .hero-level {
+    font-size: var(--text-lg);
+  }
+
+  .hero-description {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    gap: var(--space-3);
+    flex-wrap: nowrap;
+  }
+
+  .btn-primary {
+    flex: 1;
+    justify-content: center;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-xs);
+  }
+
+  .btn-bracket {
+    font-size: var(--text-xs);
+    padding: var(--space-2);
+  }
+
+  /* Horizontal stats row */
+  .hero-stats {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0;
+    padding: var(--space-3) 0;
+    margin-top: var(--space-2);
+    border-top: 1px solid var(--color-ghost-dim);
+  }
+
+  .stat-item {
+    align-items: center;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: var(--text-lg);
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+  }
+
+  .stat-divider {
+    height: 24px;
+  }
+
+  .hud-telemetry {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    font-size: 0.7rem;
+  }
+
+  .scroll-indicator {
+    padding-top: var(--space-4);
+  }
+}
+
+/* ── Small phones (< 360px) - Ultra Compact ── */
+@media (max-width: 359px) {
+  .section-home {
+    padding-top: var(--space-4);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-4));
+    min-height: auto !important;
+    height: auto;
+    justify-content: flex-start;
+  }
+
+  .hero-grid {
+    gap: var(--space-4);
+    padding: 0 var(--space-3);
+  }
+
+  .hero-visual {
+    order: -1;
+  }
+
+  .hero-image-wrapper {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+  }
+
+  .hero-content {
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: 12px;
+    margin-top: calc(-1 * var(--space-4));
+  }
+
+  .title-word {
+    font-size: clamp(1.75rem, 10vw, 2.5rem);
+  }
+
+  .hero-level {
+    font-size: var(--text-md);
+  }
+
+  .hero-description {
+    font-size: var(--text-xs);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .btn-primary,
+  .btn-bracket {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    padding: var(--space-2) 0;
+  }
+
+  .stat-value {
+    font-size: var(--text-md);
+  }
+
+  .stat-label {
+    font-size: 0.55rem;
+  }
+
+  .hud-telemetry {
+    font-size: 0.65rem;
+  }
+}
+
+/* ── Landscape mobile phones ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .section-home {
+    min-height: auto !important;
+    height: auto;
+    padding-top: var(--space-3);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-3));
+    justify-content: flex-start;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    padding: 0 var(--space-3);
+    align-items: start;
+  }
+
+  .hero-content {
+    gap: var(--space-2);
+    background: transparent;
+    padding: 0;
+    margin-top: 0;
+  }
+
+  .hero-title {
+    line-height: 0.95;
+  }
+
+  .title-word {
+    font-size: clamp(1.5rem, 6vh, 2.5rem);
+  }
+
+  .hero-level {
+    font-size: var(--text-md);
+  }
+
+  .hero-description {
+    font-size: var(--text-xs);
+    max-width: 100%;
+    line-height: 1.5;
+  }
+
+  .hero-visual {
+    order: 0;
+  }
+
+  .hero-image-wrapper {
+    aspect-ratio: 4 / 3;
+    max-height: 35vh;
+    border-radius: 12px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .btn-primary {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  .hero-stats {
+    flex-direction: row;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+    margin-top: var(--space-1);
+  }
+
+  .stat-value {
+    font-size: var(--text-md);
+  }
+
+  .hud-telemetry {
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 0.65rem;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .section-home {
     padding-top: calc(var(--nav-height) + var(--space-10));

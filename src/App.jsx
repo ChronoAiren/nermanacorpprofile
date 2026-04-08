@@ -6,16 +6,33 @@ import ProjectsGallery from './components/ProjectsGallery/ProjectsGallery';
 import AboutSection from './components/AboutSection/AboutSection';
 import ContactSection from './components/ContactSection/ContactSection';
 
+const BOOT_KEY = 'monolith-booted';
+
 export default function App() {
-  const [booted, setBooted] = useState(false);
+  // Skip boot if user has seen it before (stored in localStorage)
+  // or if they prefer reduced motion
+  const [booted, setBooted] = useState(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return true;
+    }
+    return localStorage.getItem(BOOT_KEY) === 'true';
+  });
 
   useEffect(() => {
-    document.body.classList.add('boot-active');
-  }, []);
+    if (!booted) {
+      document.body.classList.add('boot-active');
+    }
+  }, [booted]);
+
+  const handleBootComplete = () => {
+    setBooted(true);
+    localStorage.setItem(BOOT_KEY, 'true');
+    document.body.classList.remove('boot-active');
+  };
 
   return (
     <>
-      {!booted && <BootSequence onComplete={() => setBooted(true)} />}
+      {!booted && <BootSequence onComplete={handleBootComplete} />}
 
       {/* Persistent HUD overlays */}
       <div className="scanline-overlay" aria-hidden="true" />

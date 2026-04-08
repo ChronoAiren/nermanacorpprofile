@@ -3,16 +3,16 @@ import './BootSequence.css';
 
 const BOOT_LINES = [
   { text: 'MONOLITH_OS V4.0.2', delay: 0 },
-  { text: 'INITIALIZING KERNEL...', delay: 250 },
-  { text: 'LOADING NEURAL_INTERFACE...', delay: 550 },
-  { text: 'SCANNING BIOMETRIC DATA...', delay: 900, status: '[OK]' },
-  { text: 'ENCRYPTION_LEVEL: V4', delay: 1200, status: '[ACTIVE]' },
-  { text: 'RENDERING HUD COMPONENTS...', delay: 1500, status: '[OK]' },
-  { text: 'SYSTEM_STATUS:', delay: 1800, status: 'ONLINE' },
+  { text: 'INITIALIZING...', delay: 400 },
+  { text: 'LOADING INTERFACE...', delay: 800 },
+  { text: 'BIOMETRIC SCAN...', delay: 1200, status: '[OK]' },
+  { text: 'ENCRYPTION: V4', delay: 1600, status: '[ACTIVE]' },
+  { text: 'RENDERING HUD...', delay: 2000, status: '[OK]' },
+  { text: 'SYSTEM:', delay: 2400, status: 'ONLINE' },
 ];
 
-const PROGRESS_DELAY = 2100;
-const ENTER_DELAY = 2800;
+const PROGRESS_DELAY = 2800;
+const ENTER_DELAY = 3500;
 
 export default function BootSequence({ onComplete }) {
   const [visibleLines, setVisibleLines] = useState(new Set());
@@ -40,7 +40,7 @@ export default function BootSequence({ onComplete }) {
   const handleEnter = useCallback(() => {
     setIsHidden(true);
     document.body.classList.remove('boot-active');
-    setTimeout(() => onComplete?.(), 800);
+    setTimeout(() => onComplete?.(), 400);
   }, [onComplete]);
 
   /* Allow Enter key or click */
@@ -56,6 +56,32 @@ export default function BootSequence({ onComplete }) {
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [showEnter, handleEnter]);
+
+  /* Allow skipping boot early by clicking anywhere or pressing Escape */
+  useEffect(() => {
+    const handleSkip = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        handleEnter();
+      }
+    };
+
+    const handleClickSkip = (e) => {
+      // Only skip if clicking outside the boot content area
+      if (!e.target.closest('.boot-content')) {
+        handleEnter();
+      }
+    };
+
+    window.addEventListener('keydown', handleSkip);
+    const overlay = document.querySelector('.boot-overlay');
+    overlay?.addEventListener('click', handleClickSkip);
+
+    return () => {
+      window.removeEventListener('keydown', handleSkip);
+      overlay?.removeEventListener('click', handleClickSkip);
+    };
+  }, [handleEnter]);
 
   return (
     <div
@@ -89,6 +115,11 @@ export default function BootSequence({ onComplete }) {
             [ ENTER_EXPERIENCE ]
           </div>
         )}
+
+        {/* Skip hint - always visible during boot */}
+        <div className="boot-skip-hint">
+          Press ESC or click to skip
+        </div>
       </div>
       <div className="boot-scanline" />
     </div>

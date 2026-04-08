@@ -1,15 +1,16 @@
 /* ═══════ ABOUT / BIO SECTION ═══════ */
 
 .section-about {
-  padding-top: var(--space-12);
-  padding-bottom: calc(var(--bottom-nav-h) + var(--space-10));
+  padding-top: var(--space-10);
+  padding-bottom: calc(var(--bottom-nav-h) + var(--space-8));
   background: var(--color-bg-alt);
+  min-height: auto;
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-10);
+  gap: var(--space-8);
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -38,6 +39,27 @@
   object-fit: cover;
   filter: grayscale(100%) contrast(1.1);
   animation: subtle-float 6s ease-in-out infinite;
+}
+
+/* CSS Avatar Placeholder for About Section */
+.profile-portrait-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-dim) 100%);
+  border: 2px solid var(--color-ghost-dim);
+}
+
+.profile-portrait-placeholder .placeholder-initials {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--color-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
 }
 
 .profile-meta {
@@ -70,10 +92,11 @@
 
 .name-title {
   font-family: var(--font-display);
-  font-size: var(--text-4xl);
+  font-size: var(--text-2xl);
   font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-4);
+  word-break: break-word;
 }
 
 .name-desc {
@@ -167,14 +190,15 @@
 /* ── Activity Log / Timeline ── */
 .activity-log {
   max-width: var(--container-max);
-  margin: var(--space-12) auto 0;
+  margin: var(--space-10) auto 0;
 }
 
+/* Compact timeline on mobile */
 .log-timeline {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
-  padding-left: var(--space-6);
+  gap: var(--space-6);
+  padding-left: var(--space-4);
   position: relative;
 }
 
@@ -256,6 +280,294 @@
   letter-spacing: 0.1em;
 }
 
+/* ── Mobile Portrait Bento Layout (360px - 767px) ── */
+@media (min-width: 360px) and (max-width: 767px) and (orientation: portrait) {
+  .section-about {
+    padding-top: var(--space-5);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-5));
+    min-height: auto;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding: 0 var(--space-3);
+  }
+
+  /* Profile card with image and meta */
+  .about-profile {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: var(--space-3);
+    background: var(--color-surface);
+    padding: var(--space-3);
+    border-radius: 16px;
+    align-items: center;
+  }
+
+  .profile-hud {
+    max-width: none;
+    width: 100%;
+  }
+
+  .profile-image-wrapper {
+    aspect-ratio: 1;
+    border-radius: 12px;
+  }
+
+  .profile-meta {
+    gap: var(--space-2);
+  }
+
+  .profile-meta-item {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .profile-meta-item .meta-label {
+    font-size: 0.55rem;
+  }
+
+  .profile-meta-item .meta-value {
+    font-size: var(--text-xs);
+  }
+
+  /* Info card */
+  .about-info {
+    background: var(--color-surface);
+    padding: var(--space-4);
+    border-radius: 16px;
+    gap: var(--space-4);
+  }
+
+  .name-title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2);
+  }
+
+  .name-desc {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .subsection-title {
+    font-size: var(--text-xs);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+  }
+
+  /* Compact skills */
+  .skills-list {
+    gap: var(--space-3);
+  }
+
+  .skill-name {
+    font-size: 0.65rem;
+  }
+
+  .skill-value {
+    font-size: var(--text-xs);
+  }
+
+  .skill-bar {
+    height: 3px;
+  }
+
+  /* Timeline in a card */
+  .activity-log {
+    background: var(--color-surface);
+    padding: var(--space-4);
+    border-radius: 16px;
+    margin-top: var(--space-4);
+  }
+
+  .log-timeline {
+    padding-left: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .log-entry {
+    gap: var(--space-3);
+  }
+
+  .log-title {
+    font-size: var(--text-sm);
+  }
+
+  .log-org {
+    font-size: 0.65rem;
+  }
+
+  .log-desc {
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+
+  .log-date {
+    font-size: 0.65rem;
+  }
+
+  .marker-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .marker-line {
+    min-height: 30px;
+  }
+}
+
+/* ── Small phones (< 360px) - Ultra Compact Bento ── */
+@media (max-width: 359px) {
+  .section-about {
+    padding-top: var(--space-4);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-4));
+    min-height: auto;
+  }
+
+  .about-grid {
+    gap: var(--space-3);
+    padding: 0 var(--space-3);
+  }
+
+  .about-profile {
+    grid-template-columns: 100px 1fr;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: 12px;
+  }
+
+  .profile-image-wrapper {
+    border-radius: 8px;
+  }
+
+  .profile-meta-item .meta-label {
+    font-size: 0.5rem;
+  }
+
+  .profile-meta-item .meta-value {
+    font-size: 0.7rem;
+  }
+
+  .about-info {
+    padding: var(--space-3);
+    border-radius: 12px;
+    gap: var(--space-3);
+  }
+
+  .name-title {
+    font-size: var(--text-lg);
+  }
+
+  .name-desc {
+    font-size: var(--text-xs);
+  }
+
+  .subsection-title {
+    font-size: 0.7rem;
+  }
+
+  .skill-name {
+    font-size: 0.55rem;
+  }
+
+  .skill-value {
+    font-size: 0.7rem;
+  }
+
+  .activity-log {
+    padding: var(--space-3);
+    border-radius: 12px;
+  }
+
+  .log-timeline {
+    padding-left: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .log-title {
+    font-size: var(--text-xs);
+  }
+
+  .log-org {
+    font-size: 0.55rem;
+  }
+
+  .log-desc {
+    font-size: 0.7rem;
+  }
+
+  .log-date {
+    font-size: 0.55rem;
+  }
+
+  .marker-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* ── Landscape mobile phones ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .section-about {
+    padding-top: var(--space-6);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-5));
+  }
+
+  .about-grid {
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  .about-profile {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    padding: 0;
+  }
+
+  .profile-hud {
+    max-width: 140px;
+  }
+
+  .profile-image-wrapper {
+    border-radius: 8px;
+  }
+
+  .profile-meta {
+    gap: var(--space-1);
+  }
+
+  .about-info {
+    gap: var(--space-3);
+    background: transparent;
+    padding: 0;
+  }
+
+  .name-title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-1);
+  }
+
+  .name-desc {
+    font-size: var(--text-xs);
+  }
+
+  .about-skills {
+    display: none; /* Hide skills in landscape to save space */
+  }
+
+  .activity-log {
+    margin-top: var(--space-6);
+  }
+
+  .log-timeline {
+    gap: var(--space-3);
+  }
+}
+
 /* ── Responsive ── */
 @media (min-width: 768px) {
   .section-about {
@@ -265,6 +577,20 @@
 
   .about-grid {
     grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-10);
+  }
+
+  .activity-log {
+    margin-top: var(--space-12);
+  }
+
+  .name-title {
+    font-size: var(--text-3xl);
+  }
+
+  .log-timeline {
+    padding-left: var(--space-6);
+    gap: var(--space-8);
   }
 }
 

@@ -1,15 +1,16 @@
 /* ═══════ CONTACT / LINK SECTION ═══════ */
 
 .section-contact {
-  padding-top: var(--space-12);
-  padding-bottom: calc(var(--bottom-nav-h) + var(--space-12));
+  padding-top: var(--space-10);
+  padding-bottom: calc(var(--bottom-nav-h) + var(--space-8));
   background: var(--color-bg);
+  min-height: auto;
 }
 
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-10);
+  gap: var(--space-8);
   max-width: var(--container-max);
   margin: 0 auto;
 }
@@ -30,17 +31,35 @@
   gap: var(--space-6);
 }
 
-.channel-item {
+/* Channel items as clickable links */
+a.channel-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-4);
   padding: var(--space-4);
   background: var(--color-surface);
-  transition: background var(--duration-base);
+  transition: background var(--duration-base), border-color var(--duration-base);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
 }
 
-.channel-item:hover {
+a.channel-item:hover {
   background: var(--color-surface-bright);
+  border-color: var(--color-ghost-dim);
+}
+
+.channel-arrow {
+  margin-left: auto;
+  font-size: 16px;
+  color: var(--color-ghost);
+  opacity: 0.6;
+  transition: opacity var(--duration-base), transform var(--duration-base);
+}
+
+a.channel-item:hover .channel-arrow {
+  opacity: 1;
+  transform: translate(2px, -2px);
 }
 
 .channel-icon {
@@ -66,6 +85,90 @@
   font-family: var(--font-body);
   font-size: var(--text-sm);
   color: var(--color-secondary);
+  text-decoration: none;
+  transition: color var(--duration-base);
+}
+
+a.channel-value:hover {
+  color: var(--color-primary);
+}
+
+/* ── Social Links ── */
+.social-links {
+  margin-top: var(--space-8);
+}
+
+.social-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ghost);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-ghost-dim);
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.social-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background var(--duration-base), border-color var(--duration-base);
+}
+
+.social-item:hover {
+  background: var(--color-surface-bright);
+  border-color: var(--color-ghost-dim);
+}
+
+.social-icon {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-secondary);
+  letter-spacing: 0.08em;
+}
+
+.social-item:hover .social-icon {
+  color: var(--color-primary);
+}
+
+.social-arrow {
+  font-size: 14px;
+  color: var(--color-ghost);
+  opacity: 0.6;
+  transition: opacity var(--duration-base), transform var(--duration-base);
+}
+
+.social-item:hover .social-arrow {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+/* ── Mobile Social Links ── */
+@media (max-width: 767px) {
+  .social-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 359px) {
+  .social-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .social-item {
+    padding: var(--space-2) var(--space-3);
+  }
 }
 
 /* ── Contact Form ── */
@@ -91,9 +194,11 @@
 
 .form-input {
   padding: var(--space-3) 0;
-  font-size: var(--text-sm);
+  font-size: var(--text-base); /* 16px to prevent iOS zoom */
   letter-spacing: 0.04em;
   transition: color var(--duration-base);
+  /* Prevent iOS form zoom */
+  -webkit-text-size-adjust: 100%;
 }
 
 .form-input::placeholder {
@@ -137,8 +242,12 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
-  padding: var(--space-10);
+  padding: var(--space-8) var(--space-4);
   text-align: center;
+}
+
+.contact-footer {
+  margin-top: var(--space-10);
 }
 
 .success-icon {
@@ -179,6 +288,265 @@
   letter-spacing: 0.06em;
 }
 
+/* ── Mobile Portrait Bento (360px - 767px) ── */
+@media (min-width: 360px) and (max-width: 767px) and (orientation: portrait) {
+  .section-contact {
+    padding-top: var(--space-5);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-5));
+    min-height: auto;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding: 0 var(--space-3);
+  }
+
+  /* Contact info as a bento card */
+  .contact-info {
+    background: var(--color-surface);
+    padding: var(--space-4);
+    border-radius: 16px;
+  }
+
+  .contact-desc {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-4);
+    line-height: 1.6;
+  }
+
+  .contact-channels {
+    gap: var(--space-2);
+  }
+
+  .channel-item {
+    padding: var(--space-3);
+    gap: var(--space-3);
+    background: var(--color-bg-alt);
+    border-radius: 10px;
+  }
+
+  .channel-icon {
+    font-size: 20px;
+  }
+
+  .channel-label {
+    font-size: 0.65rem;
+  }
+
+  .channel-value {
+    font-size: var(--text-sm);
+  }
+
+  /* Form as a bento card */
+  .contact-form {
+    background: var(--color-surface);
+    padding: var(--space-4);
+    border-radius: 16px;
+    gap: var(--space-4);
+  }
+
+  .form-group {
+    gap: var(--space-2);
+  }
+
+  .form-label {
+    font-size: 0.65rem;
+  }
+
+  .form-input {
+    font-size: 16px;
+    padding: var(--space-2) 0;
+  }
+
+  .form-textarea {
+    min-height: 100px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--space-2);
+  }
+
+  .form-success {
+    padding: var(--space-6) var(--space-4);
+    background: var(--color-surface);
+    border-radius: 16px;
+  }
+
+  .success-icon {
+    font-size: 40px;
+  }
+
+  .success-title {
+    font-size: var(--text-lg);
+  }
+
+  .success-text {
+    font-size: var(--text-xs);
+  }
+
+  .contact-footer {
+    margin-top: var(--space-6);
+    padding: 0 var(--space-3);
+  }
+
+  .footer-status {
+    font-size: 0.65rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+}
+
+/* ── Small phones (< 360px) - Ultra Compact Bento ── */
+@media (max-width: 359px) {
+  .section-contact {
+    padding-top: var(--space-4);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-4));
+    min-height: auto;
+  }
+
+  .contact-grid {
+    gap: var(--space-3);
+    padding: 0 var(--space-3);
+  }
+
+  .contact-info,
+  .contact-form,
+  .form-success {
+    padding: var(--space-3);
+    border-radius: 12px;
+  }
+
+  .contact-desc {
+    font-size: var(--text-xs);
+    margin-bottom: var(--space-3);
+  }
+
+  .channel-item {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .channel-icon {
+    font-size: 16px;
+  }
+
+  .channel-label {
+    font-size: 0.55rem;
+  }
+
+  .channel-value {
+    font-size: var(--text-xs);
+  }
+
+  .form-group {
+    gap: var(--space-1);
+  }
+
+  .form-label {
+    font-size: 0.55rem;
+  }
+
+  .form-input {
+    font-size: 16px;
+    padding: var(--space-2) 0;
+  }
+
+  .form-textarea {
+    min-height: 80px;
+  }
+
+  .contact-form {
+    gap: var(--space-3);
+  }
+
+  .form-success {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .success-icon {
+    font-size: 32px;
+  }
+
+  .success-title {
+    font-size: var(--text-md);
+  }
+
+  .success-text {
+    font-size: 0.7rem;
+  }
+
+  .contact-footer {
+    margin-top: var(--space-6);
+  }
+
+  .footer-status {
+    font-size: 0.55rem;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+}
+
+/* ── Landscape mobile phones ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .section-contact {
+    padding-top: var(--space-6);
+    padding-bottom: calc(var(--bottom-nav-h) + var(--space-5));
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    padding: 0 var(--space-3);
+  }
+
+  .contact-info,
+  .contact-form {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .contact-desc {
+    font-size: var(--text-xs);
+    margin-bottom: var(--space-3);
+  }
+
+  .contact-channels {
+    gap: var(--space-2);
+  }
+
+  .channel-item {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .channel-icon {
+    font-size: 16px;
+  }
+
+  .channel-label,
+  .channel-value {
+    font-size: var(--text-xs);
+  }
+
+  .form-textarea {
+    min-height: 60px;
+  }
+
+  .contact-form {
+    gap: var(--space-3);
+  }
+
+  .form-success {
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border-radius: 12px;
+  }
+}
+
 /* ── Responsive ── */
 @media (min-width: 768px) {
   .section-contact {
@@ -188,5 +556,14 @@
 
   .contact-grid {
     grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+  }
+
+  .contact-footer {
+    margin-top: var(--space-12);
+  }
+
+  .form-success {
+    padding: var(--space-10);
   }
 }
