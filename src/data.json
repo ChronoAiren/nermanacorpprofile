@@ -1,0 +1,153 @@
+{
+  "_comment": "PORTFOLIO DATA - Easy to scale! Just copy-paste templates below to add more",
+
+  "brand": {
+    "_comment": "Site branding - customize the logo/name shown in navigation",
+    "name": "NERMANA CO.",
+    "version": "V4.0.2"
+  },
+
+  "personal": {
+    "_comment": "Your basic info - all fields are optional, leave blank to hide from UI. For image: use URL (https://...) or local path (/image.png). Leave blank for placeholder.",
+    "name": "KENT ASNA",
+    "title": "KENT ASNA",
+    "age": 22,
+    "subtitle": "Detail-oriented BSIT undergraduate with hands-on experience in mobile app development, AI data labeling, and community system management. Skilled in building practical tech solutions, automating workflows, and contributing to AI training pipelines. Seeking an entry-level role in software development, data, or AI operations.",
+    "level": "BSIT",
+    "status": "Available_For_Hire",
+    "location": "Tagum City, Davao Del Norte",
+    "subnetId": "09981567677",
+    "email": "asnakent@gmail.com",
+    "website": "linkedin.com/in/asnakent",
+    "image": "/hero-portrait.png"
+  },
+
+  "hero": {
+    "_comment": "Hero section tagline and stats - leave stats blank to hide them",
+    "tagline": "Building practical tech solutions, automating workflows, and contributing to AI training pipelines. Ready to deploy code and deliver results.",
+    "stats": {
+      "projects": 3,
+      "uptimeHours": 8760,
+      "deployCount": 12
+    }
+  },
+
+  "social": {
+    "_comment": "Social media links - add your usernames here (just the username, not full URL)",
+    "linkedin": "asnakent",
+    "github": "",
+    "twitter": "",
+    "facebook": "",
+    "instagram": ""
+  },
+
+  "projects": {
+    "_comment": "PROJECTS ARRAY - Copy the template below to add more projects. For image: use URL (https://...), local path (/image.png), or leave blank for stock image.",
+    "_template": {
+      "id": "_004",
+      "title": "PROJECT_NAME",
+      "description": "Brief description of what the project does and your role.",
+      "tech": ["TECH_1", "TECH_2", "TECH_3"],
+      "status": "ACTIVE | COMPLETED | DEPLOY | TESTING",
+      "image": "https://your-image-url.com/image.jpg | /project-neural.png | /project-encryption.png | /project-silicon.png | /project-monolith.png | BLANK for stock",
+      "link": "https://your-project-link.com or #"
+    },
+    "items": [
+      {
+        "id": "_001",
+        "title": "SAN VICENTE DEATH AID APP",
+        "description": "Custom mobile app built with Flutter and Supabase to encode payment transactions, track member status, and monitor penalties for a volunteer-run community organization.",
+        "tech": ["FLUTTER", "SUPABASE", "SQL"],
+        "status": "DEPLOY",
+        "image": "/project-neural.png",
+        "link": "#"
+      },
+      {
+        "id": "_002",
+        "title": "AI IMAGE RATING PIPELINE",
+        "description": "Contributed to machine learning model training by labeling and rating AI-generated images with high accuracy and consistency within tight turnaround timelines.",
+        "tech": ["AI_LABELING", "DATA_ANNOTATION", "QUALITY_CONTROL"],
+        "status": "COMPLETED",
+        "image": "/project-encryption.png",
+        "link": "#"
+      },
+      {
+        "id": "_003",
+        "title": "AI TRAINING DATA PREP",
+        "description": "Prepared and structured AI training data in the form of PowerPoint presentations for mock project pipelines, ensuring data quality and relevance.",
+        "tech": ["DATA_PREPARATION", "POWERPOINT", "AI_TRAINING"],
+        "status": "COMPLETED",
+        "image": "/project-silicon.png",
+        "link": "#"
+      }
+    ]
+  },
+  "skills": {
+    "_comment": "SKILLS ARRAY - Copy template to add more skills (level 0-100)",
+    "_template": { "name": "SKILL_NAME", "level": 80 },
+    "items": [
+      { "name": "FLUTTER", "level": 85 },
+      { "name": "SUPABASE", "level": 80 },
+      { "name": "SQL", "level": 75 },
+      { "name": "POWER_BI", "level": 70 },
+      { "name": "AI_DATA_LABELING", "level": 85 }
+    ]
+  },
+
+  "experience": {
+    "_comment": "EXPERIENCE ARRAY - Copy template to add more work experience",
+    "_template": {
+      "title": "Job Title",
+      "company": "Company Name",
+      "description": "Describe your responsibilities and achievements.",
+      "date": "Month YYYY — Month YYYY or PRESENT"
+    },
+    "items": [
+      {
+        "title": "Volunteer Assistant Secretary",
+        "company": "San Vicente Death Aid Association",
+        "description": "Issued handwritten receipts to members and developed a custom mobile app using Flutter and Supabase to encode payment transactions, track member status, and monitor penalties. Managed dual manual and digital record-keeping systems.",
+        "date": "2021 — PRESENT"
+      },
+      {
+        "title": "AI Image Labeler / Rater",
+        "company": "Imerit AI",
+        "description": "Labeled and rated AI-generated images to support machine learning model training. Maintained accuracy and consistency in data annotation tasks within tight turnaround timelines.",
+        "date": "March 2026 — April 2026"
+      },
+      {
+        "title": "AI Data Provider",
+        "company": "Postwork",
+        "description": "Prepared and structured AI training data in the form of PowerPoint presentations for mock project pipelines. Ensured data quality and relevance aligned with project requirements.",
+        "date": "November 2025"
+      }
+    ]
+  },
+
+  "certifications": {
+    "_comment": "CERTIFICATIONS ARRAY - Just add more strings to the list",
+    "items": [
+      "Master ChatGPT — UniAthena",
+      "Career Essentials in Data Analysis — Microsoft & LinkedIn",
+      "Generative AI Productivity Skills — Microsoft & LinkedIn",
+      "Zendesk CS Professional Certificate — Zendesk"
+    ]
+  },
+
+  "education": {
+    "_comment": "Education info - optional section",
+    "degree": "Bachelor of Science in Information Technology",
+    "status": "Undergraduate — Not Currently Enrolled",
+    "school": "University of Mindanao",
+    "location": "Tagum, Philippines",
+    "year": "2017 — Present"
+  },
+
+  "_quick_guide": {
+    "add_project": "1. Copy _template from projects 2. Paste in projects.items array 3. Update values 4. Increment id (_004, _005, etc.)",
+    "add_experience": "1. Copy _template from experience 2. Paste in experience.items array 3. Fill in your job details",
+    "add_skill": "1. Copy _template from skills 2. Paste in skills.items array 3. Set name and level (0-100)",
+    "hide_section": "Set items to [] (empty array) or remove the section entirely",
+    "optional_fields": "All fields are optional - leave blank or remove to hide from UI"
+  }
+}

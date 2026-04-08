@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8E4DC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9C92AC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Hexagon background -->
+  <path d="M50 5 L93 30 L93 70 L50 95 L7 70 L7 30 Z" 
+        fill="none" 
+        stroke="url(#grad)" 
+        stroke-width="2"/>
+  
+  <!-- Inner frame -->
+  <path d="M50 15 L83 35 L83 65 L50 85 L17 65 L17 35 Z" 
+        fill="none" 
+        stroke="#E8E4DC" 
+        stroke-width="1" 
+        opacity="0.5"/>
+  
+  <!-- NC Monogram -->
+  <text x="50" y="58" 
+        font-family="Space Grotesk, JetBrains Mono, monospace" 
+        font-size="28" 
+        font-weight="700" 
+        fill="#E8E4DC" 
+        text-anchor="middle"
+        letter-spacing="-2">NC</text>
+  
+  <!-- Corner accents -->
+  <circle cx="50" cy="15" r="2" fill="#E8E4DC"/>
+  <circle cx="83" cy="35" r="2" fill="#E8E4DC"/>
+  <circle cx="83" cy="65" r="2" fill="#E8E4DC"/>
+  <circle cx="50" cy="85" r="2" fill="#E8E4DC"/>
+  <circle cx="17" cy="65" r="2" fill="#E8E4DC"/>
+  <circle cx="17" cy="35" r="2" fill="#E8E4DC"/>
+</svg>
