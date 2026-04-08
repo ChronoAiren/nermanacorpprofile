@@ -1,0 +1,150 @@
+/* ═══════════════════════════════════════════════════════════════
+   MONOLITH ANIMATIONS — Cyberpunk HUD Motion System
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Glitch Effect ── */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate(0); }
+  10%      { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 1px); }
+  20%      { clip-path: inset(50% 0 30% 0); transform: translate(3px, -1px); }
+  30%      { clip-path: inset(70% 0 10% 0); transform: translate(-2px, 2px); }
+  40%      { clip-path: inset(40% 0 40% 0); transform: translate(2px, -2px); }
+  50%      { clip-path: inset(10% 0 80% 0); transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(95% 0 0 0); transform: translate(0); }
+  10%      { clip-path: inset(60% 0 20% 0); transform: translate(3px, -1px); }
+  20%      { clip-path: inset(30% 0 50% 0); transform: translate(-3px, 1px); }
+  30%      { clip-path: inset(10% 0 70% 0); transform: translate(2px, -2px); }
+  40%      { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 2px); }
+  50%      { clip-path: inset(80% 0 10% 0); transform: translate(0); }
+}
+
+/* ── Scanline ── */
+@keyframes scanline-move {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes scan-once {
+  0%   { top: -10%; opacity: 1; }
+  100% { top: 110%; opacity: 0.3; }
+}
+
+/* ── Pulse ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+  50%      { opacity: 0.6; box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); }
+}
+
+/* ── Blink ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ── Corner Bracket Expand ── */
+@keyframes corner-expand-h {
+  from { width: 0; }
+  to   { width: 20px; }
+}
+
+@keyframes corner-expand-v {
+  from { height: 0; }
+  to   { height: 20px; }
+}
+
+/* ── Boot Progress ── */
+@keyframes boot-fill {
+  0%   { width: 0; }
+  60%  { width: 60%; }
+  80%  { width: 80%; }
+  100% { width: 100%; }
+}
+
+/* ── Typing Cursor ── */
+@keyframes cursor-blink {
+  0%, 100% { border-color: var(--color-primary); }
+  50%      { border-color: transparent; }
+}
+
+/* ── Fade Slide Up ── */
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Skill Fill ── */
+@keyframes skill-fill {
+  from { width: 0; }
+  to   { width: var(--fill-level); }
+}
+
+/* ── Scroll Arrow ── */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50%      { transform: translateY(8px); opacity: 0.4; }
+}
+
+/* ── Noise Static ── */
+@keyframes noise-shift {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-5%, -5%); }
+  20%  { transform: translate(-10%, 5%); }
+  30%  { transform: translate(5%, -10%); }
+  40%  { transform: translate(-5%, 15%); }
+  50%  { transform: translate(-10%, 5%); }
+  60%  { transform: translate(15%, 0); }
+  70%  { transform: translate(0, 10%); }
+  80%  { transform: translate(-15%, 0); }
+  90%  { transform: translate(10%, 5%); }
+  100% { transform: translate(5%, 0); }
+}
+
+/* ── HUD Data Flicker ── */
+@keyframes data-flicker {
+  0%, 92%, 100% { opacity: 1; }
+  93%           { opacity: 0.2; }
+  94%           { opacity: 0.8; }
+  96%           { opacity: 0.3; }
+  97%           { opacity: 1; }
+}
+
+/* ── Marker Pulse ── */
+@keyframes marker-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+/* ── Input Scan ── */
+@keyframes input-scan {
+  0%   { left: 0; width: 0; }
+  50%  { left: 0; width: 100%; }
+  100% { left: 100%; width: 0; }
+}
+
+/* ── Card Scan Line ── */
+@keyframes card-scan {
+  0%   { top: -2px; }
+  100% { top: 100%; }
+}
+
+/* ── Float ── */
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* ── Slide In From Left ── */
+@keyframes slide-in-left {
+  from { transform: translateX(-20px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
