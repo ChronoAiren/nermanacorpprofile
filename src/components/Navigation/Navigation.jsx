@@ -74,15 +74,18 @@ export default function Navigation() {
             <span className="bottom-nav-label">{s.label}</span>
           </a>
         ))}
-        {/* Theme toggle in mobile bottom nav */}
+        {/* Theme toggle in mobile bottom nav - Modern Toggle Switch */}
         <button
           className="bottom-nav-item bottom-nav-theme"
           onClick={toggleTheme}
           aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
         >
-          <span className="material-icons icon-dark">light_mode</span>
-          <span className="material-icons icon-light">dark_mode</span>
-          <span className="bottom-nav-label">THEME</span>
+          <div className="theme-toggle-switch">
+            <div className={`theme-toggle-slider ${theme === 'dark' ? 'dark' : 'light'}`}>
+              <span className="material-icons">{theme === 'dark' ? 'dark_mode' : 'light_mode'}</span>
+            </div>
+          </div>
+          <span className="bottom-nav-label">{theme === 'dark' ? 'DARK' : 'LIGHT'}</span>
         </button>
       </nav>
     </>
