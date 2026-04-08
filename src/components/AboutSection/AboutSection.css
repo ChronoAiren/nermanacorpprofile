@@ -4,7 +4,7 @@
   padding-top: var(--space-10);
   padding-bottom: calc(var(--bottom-nav-h) + var(--space-8));
   background: var(--color-bg-alt);
-  min-height: auto;
+  min-height: 80vh;
 }
 
 .about-grid {
