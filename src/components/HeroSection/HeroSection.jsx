@@ -83,14 +83,24 @@ export default function HeroSection() {
             </h1>
           )}
 
-          {/* Level */}
-          {personal?.level && (
+          {/* Level & Age */}
+          {(personal?.level || personal?.age) && (
             <div
               ref={subtitleRef}
               className={`hero-subtitle reveal-element ${subtitleVisible ? 'revealed' : ''}`}
             >
-              <span className="meta-label">[ PERMISSION_LEVEL ]</span>
-              <span className="hero-level">LVL: {personal.level}</span>
+              {personal?.level && (
+                <>
+                  <span className="meta-label">[ PERMISSION_LEVEL ]</span>
+                  <span className="hero-level">LVL: {personal.level}</span>
+                </>
+              )}
+              {personal?.age && (
+                <>
+                  <span className="meta-separator" />
+                  <span className="hero-age">AGE: {personal.age}</span>
+                </>
+              )}
             </div>
           )}
 

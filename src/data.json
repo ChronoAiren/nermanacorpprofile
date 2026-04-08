@@ -11,6 +11,7 @@
     "_comment": "Your basic info - all fields are optional, leave blank to hide from UI. For image: use URL (https://...) or local path (/image.png). Leave blank for placeholder.",
     "name": "KENT ASNA",
     "title": "KENT ASNA",
+    "age": 22,
     "subtitle": "Detail-oriented BSIT undergraduate with hands-on experience in mobile app development, AI data labeling, and community system management. Skilled in building practical tech solutions, automating workflows, and contributing to AI training pipelines. Seeking an entry-level role in software development, data, or AI operations.",
     "level": "BSIT",
     "status": "Available_For_Hire",

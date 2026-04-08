@@ -80,6 +80,14 @@
   letter-spacing: 0.05em;
 }
 
+.hero-age {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--color-muted);
+  letter-spacing: 0.05em;
+}
+
 .hero-description {
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -337,6 +345,10 @@
     font-size: var(--text-lg);
   }
 
+  .hero-age {
+    font-size: var(--text-md);
+  }
+
   .hero-description {
     font-size: var(--text-sm);
     line-height: 1.6;
@@ -439,6 +451,10 @@
     font-size: var(--text-md);
   }
 
+  .hero-age {
+    font-size: var(--text-sm);
+  }
+
   .hero-description {
     font-size: var(--text-xs);
   }
@@ -505,6 +521,10 @@
 
   .hero-level {
     font-size: var(--text-md);
+  }
+
+  .hero-age {
+    font-size: var(--text-sm);
   }
 
   .hero-description {
