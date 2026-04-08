@@ -255,6 +255,39 @@ export default function AboutSection() {
           </div>
         </div>
       )}
+
+      {/* Certifications */}
+      {data.certifications?.items?.length > 0 && (
+        <div className="certifications-section">
+          <h4 className="subsection-title">CERTIFICATIONS</h4>
+          <div className="certifications-list">
+            {data.certifications.items.map((cert, i) => {
+              // Check if certification has a link (format: "Name — Issuer|https://url" or just "Name — Issuer")
+              const parts = cert.split('|');
+              const displayText = parts[0];
+              const link = parts[1];
+              
+              return (
+                <div key={i} className="certification-item">
+                  {link ? (
+                    <a 
+                      href={link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="certification-link"
+                    >
+                      <span className="certification-text">{displayText}</span>
+                      <span className="material-icons certification-icon">open_in_new</span>
+                    </a>
+                  ) : (
+                    <span className="certification-text">{displayText}</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
