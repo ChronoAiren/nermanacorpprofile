@@ -74,8 +74,9 @@
   bottom: 0;
   left: 0;
   width: 0;
-  height: 1px;
+  height: 2px;
   background: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary);
   transition: width var(--duration-base) var(--ease-out);
 }
 
@@ -86,12 +87,18 @@
 
 .nav-link:hover .nav-link-id,
 .nav-link.active .nav-link-id {
-  color: var(--color-muted);
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
+}
+
+/* Active state enhancement */
+.nav-link.active {
+  text-shadow: 0 0 20px var(--color-primary-dim, rgba(232, 228, 220, 0.3));
 }
 
 .top-nav-status {
@@ -115,6 +122,32 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Desktop nav link active indicator - glow dot */
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -12px;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-primary);
+  animation: nav-pulse 2s ease-in-out infinite;
+}
+
+@keyframes nav-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-primary);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 5px var(--color-primary), 0 0 10px var(--color-primary);
+  }
 }
 
 /* ── Mobile Bottom Nav ── */
