@@ -1,15 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
 import './BootSequence.css';
+import data from '../../data.json';
 
-const BOOT_LINES = [
-  { text: 'MONOLITH_OS V4.0.2', delay: 0 },
-  { text: 'INITIALIZING...', delay: 400 },
-  { text: 'LOADING INTERFACE...', delay: 800 },
-  { text: 'BIOMETRIC SCAN...', delay: 1200, status: '[OK]' },
-  { text: 'ENCRYPTION: V4', delay: 1600, status: '[ACTIVE]' },
-  { text: 'RENDERING HUD...', delay: 2000, status: '[OK]' },
-  { text: 'SYSTEM:', delay: 2400, status: 'ONLINE' },
-];
+const getBootLines = () => {
+  const brandName = data.brand?.name || 'NERMANA CO.';
+  const brandVersion = data.brand?.version || 'V4.0.2';
+  const cleanBrand = brandName.replace(/\s+/g, '_').toUpperCase();
+  
+  return [
+    { text: `${cleanBrand}_OS ${brandVersion}`, delay: 0 },
+    { text: 'INITIALIZING...', delay: 400 },
+    { text: 'LOADING INTERFACE...', delay: 800 },
+    { text: 'BIOMETRIC SCAN...', delay: 1200, status: '[OK]' },
+    { text: 'ENCRYPTION: V4', delay: 1600, status: '[ACTIVE]' },
+    { text: 'RENDERING HUD...', delay: 2000, status: '[OK]' },
+    { text: 'SYSTEM:', delay: 2400, status: 'ONLINE' },
+  ];
+};
 
 const PROGRESS_DELAY = 2800;
 const ENTER_DELAY = 3500;
@@ -20,9 +27,11 @@ export default function BootSequence({ onComplete }) {
   const [showEnter, setShowEnter] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
 
+  const bootLines = getBootLines();
+
   useEffect(() => {
     /* Reveal each line with staggered delay */
-    const timers = BOOT_LINES.map((line, i) =>
+    const timers = bootLines.map((line, i) =>
       setTimeout(() => {
         setVisibleLines((prev) => new Set([...prev, i]));
       }, line.delay)
@@ -35,7 +44,7 @@ export default function BootSequence({ onComplete }) {
     timers.push(setTimeout(() => setShowEnter(true), ENTER_DELAY));
 
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [bootLines]);
 
   const handleEnter = useCallback(() => {
     setIsHidden(true);
@@ -90,7 +99,7 @@ export default function BootSequence({ onComplete }) {
       aria-label="System boot sequence"
     >
       <div className="boot-content">
-        {BOOT_LINES.map((line, i) => (
+        {bootLines.map((line, i) => (
           <div
             key={i}
             className={`boot-line ${visibleLines.has(i) ? 'visible' : ''}`}
