@@ -288,6 +288,54 @@ export default function AboutSection() {
           </div>
         </div>
       )}
+
+      {/* Education */}
+      {data.education?.items?.length > 0 && (
+        <div className="education-section">
+          <h4 className="subsection-title">EDUCATION</h4>
+          <div className="education-list">
+            {data.education.items.map((edu, i) => (
+              <div key={i} className="education-item">
+                {edu.link ? (
+                  <a 
+                    href={edu.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="education-link"
+                  >
+                    <div className="education-header">
+                      <span className="education-degree">{edu.degree}</span>
+                      <span className="material-icons education-icon">open_in_new</span>
+                    </div>
+                    <div className="education-details">
+                      {edu.school && <span className="education-school">{edu.school}</span>}
+                      {edu.location && <span className="education-location">{edu.location}</span>}
+                    </div>
+                    <div className="education-meta">
+                      {edu.year && <span className="education-year">{edu.year}</span>}
+                      {edu.status && <span className="education-status">{edu.status}</span>}
+                    </div>
+                  </a>
+                ) : (
+                  <>
+                    <div className="education-header">
+                      <span className="education-degree">{edu.degree}</span>
+                    </div>
+                    <div className="education-details">
+                      {edu.school && <span className="education-school">{edu.school}</span>}
+                      {edu.location && <span className="education-location">{edu.location}</span>}
+                    </div>
+                    <div className="education-meta">
+                      {edu.year && <span className="education-year">{edu.year}</span>}
+                      {edu.status && <span className="education-status">{edu.status}</span>}
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

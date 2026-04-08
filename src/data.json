@@ -127,7 +127,7 @@
   "certifications": {
     "_comment": "CERTIFICATIONS ARRAY - Just add more strings to the list",
     "items": [
-      "Master ChatGPT — UniAthena",
+      "Master ChatGPT — UniAthena|https://credential.url",
       "Career Essentials in Data Analysis — Microsoft & LinkedIn",
       "Generative AI Productivity Skills — Microsoft & LinkedIn",
       "Zendesk CS Professional Certificate — Zendesk"
@@ -135,12 +135,18 @@
   },
 
   "education": {
-    "_comment": "Education info - optional section",
-    "degree": "Bachelor of Science in Information Technology",
-    "status": "Undergraduate — Not Currently Enrolled",
-    "school": "University of Mindanao",
-    "location": "Tagum, Philippines",
-    "year": "2017 — Present"
+    "_comment": "Education history - add multiple items to the array",
+    "_template": { "degree": "", "status": "", "school": "", "location": "", "year": "", "link": "" },
+    "items": [
+      {
+        "degree": "Bachelor of Science in Information Technology",
+        "status": "Undergraduate — Not Currently Enrolled",
+        "school": "University of Mindanao",
+        "location": "Tagum, Philippines",
+        "year": "2017 — Present",
+        "link": ""
+      }
+    ]
   },
 
   "_quick_guide": {

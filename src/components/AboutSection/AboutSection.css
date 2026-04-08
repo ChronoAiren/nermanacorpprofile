@@ -263,6 +263,135 @@
   }
 }
 
+/* ── Education ── */
+.education-section {
+  max-width: var(--container-max);
+  margin: var(--space-10) auto 0;
+}
+
+.education-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.education-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-ghost-dim);
+  border-radius: 8px;
+  padding: var(--space-4);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.education-item:hover {
+  background: var(--color-surface-bright);
+  border-color: var(--color-ghost);
+  transform: translateY(-2px);
+}
+
+.education-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.education-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.education-degree {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+}
+
+.education-icon {
+  font-size: 16px;
+  color: var(--color-ghost);
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.education-link:hover .education-icon {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+.education-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.education-school {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-secondary);
+}
+
+.education-location {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.education-location::before {
+  content: '•';
+  margin-right: var(--space-1);
+  color: var(--color-ghost);
+}
+
+.education-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.education-year {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  background: var(--color-bg-alt);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 4px;
+}
+
+.education-status {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* Mobile education */
+@media (max-width: 767px) {
+  .education-section {
+    margin-top: var(--space-8);
+    padding: 0 var(--space-3);
+  }
+  
+  .education-item {
+    padding: var(--space-3);
+  }
+  
+  .education-degree {
+    font-size: var(--text-sm);
+  }
+  
+  .education-school {
+    font-size: var(--text-xs);
+  }
+}
+
 /* Compact timeline on mobile */
 .log-timeline {
   display: flex;
