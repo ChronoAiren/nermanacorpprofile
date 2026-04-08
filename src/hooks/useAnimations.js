@@ -171,3 +171,46 @@ export function useLiveTimestamp() {
 
   return timestamp;
 }
+
+/**
+ * Detect low-end devices and apply optimizations.
+ * Checks for: prefers-reduced-motion, memory, CPU cores, touch device
+ */
+export function useLowEndDetection() {
+  const [isLowEnd, setIsLowEnd] = useState(false);
+
+  useEffect(() => {
+    const checkLowEnd = () => {
+      // Check for reduced motion preference
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      // Check device memory (if available)
+      const deviceMemory = navigator.deviceMemory || 4;
+      
+      // Check CPU cores (if available)
+      const hardwareConcurrency = navigator.hardwareConcurrency || 4;
+      
+      // Check connection (save data mode)
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const saveData = connection?.saveData || false;
+      
+      // Determine if low-end
+      const isLowEndDevice = 
+        prefersReducedMotion ||
+        deviceMemory < 4 ||
+        hardwareConcurrency < 4 ||
+        saveData;
+      
+      setIsLowEnd(isLowEndDevice);
+      
+      // Apply low-end class to body
+      if (isLowEndDevice) {
+        document.body.classList.add('low-end-mode');
+      }
+    };
+
+    checkLowEnd();
+  }, []);
+
+  return isLowEnd;
+}

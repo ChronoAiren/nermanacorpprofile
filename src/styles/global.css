@@ -628,3 +628,80 @@ textarea {
     transform: scale(0.95);
   }
 }
+
+/* ── Low-end device optimizations ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scanline-overlay,
+  .noise-overlay,
+  .boot-scanline {
+    display: none !important;
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    display: none !important;
+  }
+}
+
+/* Low-end mode class (can be toggled via JS for device detection) */
+body.low-end-mode {
+  /* Disable complex animations */
+  .scanline-overlay,
+  .noise-overlay,
+  .boot-scanline {
+    display: none !important;
+  }
+
+  /* Simplify transitions */
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.1s !important;
+    animation-duration: 0.3s !important;
+  }
+
+  /* Disable glitch effects */
+  .glitch-text::before,
+  .glitch-text::after {
+    display: none !important;
+  }
+
+  /* Disable honeycomb hover */
+  &::before {
+    display: none !important;
+  }
+
+  /* Simplify button animations */
+  .btn-primary:hover {
+    animation: none !important;
+  }
+
+  /* Reduce motion on reveals */
+  .reveal-element {
+    transition: opacity 0.2s ease !important;
+    transform: none !important;
+  }
+
+  .reveal-element.revealed {
+    transform: none !important;
+  }
+
+  /* Disable nav pulse */
+  .nav-link.active::before {
+    animation: none !important;
+  }
+
+  /* Simplify scroll indicator */
+  .scroll-indicator {
+    animation: none !important;
+  }
+}
